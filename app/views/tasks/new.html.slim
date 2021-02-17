@@ -1,4 +1,5 @@
 h1 タスクの新規登録
+p てs
 
 .nav.justify-content-end
   = link_to '一覧', tasks_path, class: 'nav-link'
@@ -16,3 +17,8 @@ h1 タスクの新規登録
     = f.label :description
     = f.text_area :description, rows: 5, class: 'form-control', id: 'task_description'
   = f.submit nil, class: 'btn btn-primary'
+
+  javascript:
+    $(document).ready(function() {
+      $("p").text("成功！！");
+    });
