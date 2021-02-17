@@ -46,6 +46,8 @@ RSpec.describe 'tasks#new', type: :system do
     find('.btn-primary').click
 
     # バリデーションがかかりメッセージが表示されている
-    expect(find('#error_explanation').text).to eq '名称を入力してください'
+    expect(find('#task_name').find(:xpath, '..').text).to have_content('* 必須項目です')
+    # 一覧画面に遷移していない
+    expect(page.current_path).to eq new_task_path
   end
 end
