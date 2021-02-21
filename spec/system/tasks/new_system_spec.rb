@@ -7,7 +7,7 @@ RSpec.describe 'tasks#new', type: :system do
     visit new_task_path
 
     # タイトルが表示されている
-    expect(page).to have_content 'タスクの新規登録'
+    expect(find('h1').text).to eq 'タスクの新規登録'
     # 名称フィールドが表示されている
     expect(page).to have_field '名称', with: ''
     # 詳しい説明フィールドが表示されている
