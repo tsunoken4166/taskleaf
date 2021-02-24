@@ -55,4 +55,27 @@ RSpec.describe TasksController, type: :request do
       it { expect(res).to_not redirect_to tasks_path }
     end
   end
+
+  describe 'GET #show' do
+
+    subject { get task_path(task.id) }
+
+    context 'タスクが存在する場合' do
+      
+      let(:task) { create(:task) }
+      
+      # リクエストが成功すること
+      it { expect(res.status).to eq 200 }
+  
+      # タスク名が表示されていること
+      it { expect(res.body).to include task.name }
+    end
+
+    context 'タスクが存在しない場合' do
+
+      subject { -> { get task_path(1) } }
+
+      it { is_expected.to raise_error ActiveRecord::RecordNotFound }
+    end
+  end
 end
