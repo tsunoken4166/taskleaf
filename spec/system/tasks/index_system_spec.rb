@@ -30,6 +30,8 @@ RSpec.describe 'tasks#index', type: :system do
       expect(all('td').map(&:text).second).to eq I18n.l(task.created_at)
       # 登録されたタスクの行右端に編集ページへのリンクテキストが表示されている
       expect(find('#edit').text).to eq '編集'
+      # 登録されたタスクの行右端に削除のリンクテキストが表示されている
+      expect(find('.btn-danger').text).to eq '削除'
     end
   end
 

@@ -78,9 +78,9 @@ RSpec.describe TasksController, type: :request do
 
   describe 'GET #edit' do
 
-    subject { get edit_task_path(task.id) }
-
     let(:task) { create(:task) }
+
+    subject { get edit_task_path(task.id) }
 
     # リクエストが成功すること
     it { is_expected.to eq 200 }
@@ -88,26 +88,36 @@ RSpec.describe TasksController, type: :request do
 
   describe 'PUT #update' do
 
-    subject { put task_path(task), params: task_params }
-
     let(:task) { create(:task) }
 
     let(:task_params) { { task: { name: 'hugahuga', description: 'testtesttest' } } }
+    
+    subject { put task_path(task), params: task_params }
 
     # リクエストが成功すること
     it { is_expected.to eq 302 }
 
     # タスク名が更新されること
-    it do
-      subject
-      expect(task.reload.name).to eq 'hugahuga'
-    end
+    it { expect{ subject }.to change{ task.reload.name }.from('コード改修').to('hugahuga') }
 
     # 詳しい説明が更新されること
-    it do
-      subject
-      expect(task.reload.description).to eq 'testtesttest'
-    end
+    it { expect{ subject }.to change{ task.reload.description }.from(nil).to('testtesttest') }
+
+    # リダイレクトすること
+    it { expect(res).to redirect_to tasks_path }
+  end
+
+  describe 'DELETE #destroy' do
+
+    let!(:task) { create(:task) }
+
+    subject { delete task_path(task) }
+
+    # リクエストが成功すること
+    it { is_expected.to eq 302 }
+
+    # タスクが削除されていること
+    it { expect{ subject }.to change(Task, :count).by(-1) }
 
     # リダイレクトすること
     it { expect(res).to redirect_to tasks_path }

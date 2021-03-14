@@ -16,6 +16,8 @@ RSpec.describe 'tasks#show', type: :system do
     expect(all('td').map(&:text)).to match filtered_attr_names(task).values
     # 編集ボタンが表示されている
     expect(find('.btn-primary').text).to eq '編集'
+    # 登録されたタスクの行右端に削除のリンクテキストが表示されている
+    expect(find('.btn-danger').text).to eq '削除'
   end
 
   it '一覧をクリックすると一覧画面に遷移する' do
