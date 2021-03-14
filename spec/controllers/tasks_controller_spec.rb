@@ -25,7 +25,7 @@ RSpec.describe TasksController, type: :request do
 
   describe 'POST #create' do
 
-    subject{ post tasks_path, params: task_params }
+    subject { post tasks_path, params: task_params }
 
     context 'パラメータが妥当な場合' do
 
@@ -65,10 +65,7 @@ RSpec.describe TasksController, type: :request do
       let(:task) { create(:task) }
       
       # リクエストが成功すること
-      it { expect(res.status).to eq 200 }
-  
-      # タスク名が表示されていること
-      it { expect(res.body).to include task.name }
+      it { expect(res.status).to eq 200 }  
     end
 
     context 'タスクが存在しない場合' do
@@ -77,5 +74,42 @@ RSpec.describe TasksController, type: :request do
 
       it { is_expected.to raise_error ActiveRecord::RecordNotFound }
     end
+  end
+
+  describe 'GET #edit' do
+
+    subject { get edit_task_path(task.id) }
+
+    let(:task) { create(:task) }
+
+    # リクエストが成功すること
+    it { is_expected.to eq 200 }
+  end
+
+  describe 'PUT #update' do
+
+    subject { put task_path(task), params: task_params }
+
+    let(:task) { create(:task) }
+
+    let(:task_params) { { task: { name: 'hugahuga', description: 'testtesttest' } } }
+
+    # リクエストが成功すること
+    it { is_expected.to eq 302 }
+
+    # タスク名が更新されること
+    it do
+      subject
+      expect(task.reload.name).to eq 'hugahuga'
+    end
+
+    # 詳しい説明が更新されること
+    it do
+      subject
+      expect(task.reload.description).to eq 'testtesttest'
+    end
+
+    # リダイレクトすること
+    it { expect(res).to redirect_to tasks_path }
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'tasks#new', type: :system do
 
-  it '新規作成ページの各項目が表示されている' do
+  it '新規作成ページの各項目が正しく表示されている' do
     # タスク新規作成ページを開く
     visit new_task_path
 

@@ -10,10 +10,12 @@ RSpec.describe 'tasks#show', type: :system do
 
     # 適切なタイトルが表示されている
     expect(find('h1').text).to eq 'タスクの詳細'
-    # 行の項目名と順番が全て正しい
+    # 項目名が全て正しい
     expect(all('th').map(&:text)).to match filtered_attr_names(task).keys
-    # 行の値が全て正しい
+    # 項目の値が全て正しい
     expect(all('td').map(&:text)).to match filtered_attr_names(task).values
+    # 編集ボタンが表示されている
+    expect(find('.btn-primary').text).to eq '編集'
   end
 
   it '一覧をクリックすると一覧画面に遷移する' do
