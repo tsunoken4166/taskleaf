@@ -35,7 +35,7 @@ RSpec.describe 'tasks#new', type: :system do
 
     # タスクの登録が成功し、一覧画面に遷移している
     expect(page).to have_content('タスク「Javascriptコード改修」を登録しました')
-    expect(page.current_path).to eq tasks_path
+    expect(page.current_path).to eq task_path(Task.last)
   end
 
   it '名称が空白の場合、バリデーションがかかる' do

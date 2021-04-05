@@ -38,7 +38,7 @@ RSpec.describe TasksController, type: :request do
       it { expect{ subject }.to change{ Task.count }.by(1) }
 
       # リダイレクトすること
-      it { expect(res).to redirect_to tasks_path }
+      it { expect(res).to redirect_to task_path(Task.last) }
     end
 
     context 'パラメータが不当な場合' do
